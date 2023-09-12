@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace bookSystem {
     /// <summary>
@@ -20,6 +21,15 @@ namespace bookSystem {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+        }
+
+        private void enableSearchMenuItem_Click(object sender, RoutedEventArgs e) {
+            if (enableSearchMenuItem.IsChecked == true) {
+                searchPanel.Visibility = Visibility.Visible;
+            }
+            else {
+                searchPanel.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

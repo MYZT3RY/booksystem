@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bookSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Информационная система книжного магазина" Height="800" Width="1200" MinHeight="800" MinWidth="1200">
     <Grid>
-
+        <DockPanel>
+            <Menu Height="20" DockPanel.Dock="Top">
+                <MenuItem Header="Файл">
+                    <MenuItem Header="Авторизация"/>
+                    <Separator/>
+                    <MenuItem Header="Поиск" IsCheckable="True" x:Name="enableSearchMenuItem" Click="enableSearchMenuItem_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Выход"/>
+                </MenuItem>
+            </Menu>
+            <StackPanel DockPanel.Dock="Left" Margin="5,5,5,5" x:Name="searchPanel" Visibility="Collapsed">
+                <Label Content="Поиск"/>
+            </StackPanel>
+            <DataGrid x:Name="dataGrid" IsReadOnly="True" DockPanel.Dock="Right">
+                <DataGrid.ContextMenu>
+                    <ContextMenu x:Name="dataGridContextMenu" Visibility="Collapsed">
+                        <MenuItem Header="Добавить"/>
+                        <MenuItem Header="Редактировать"/>
+                        <MenuItem Header="Удалить"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+        </DockPanel>
     </Grid>
 </Window>
