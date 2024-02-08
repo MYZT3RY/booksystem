@@ -1,0 +1,45 @@
+﻿<Window x:Class="bookSystem.bookView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bookSystem"
+        mc:Ignorable="d"
+        Title="Информация о книге" Height="450" Width="1050" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <DockPanel>
+            <StackPanel Margin="5,5,0,5" DockPanel.Dock="Left" Width="350">
+                <TextBlock x:Name="bookName" TextWrapping="Wrap" Text="Последний гамбит" FontSize="20" FontWeight="DemiBold" Margin="5,5,5,5"/>
+                <TextBlock x:Name="bookAuthorName" TextWrapping="Wrap" Text="Дженнифер Линн Барнс" FontSize="16" Margin="5,0,0,10"/>
+                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Left">
+                            <Label Content="ID товара"/>
+                            <Label Content="Жанр"/>
+                            <Label Content="Издатель"/>
+                            <Label Content="Серия"/>
+                            <Label Content="Год издания"/>
+                            <Label Content="Количество страниц"/>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Right">
+                            <TextBlock x:Name="bookId" TextWrapping="Wrap" Text="2" Margin="5"/>
+                            <TextBlock x:Name="bookGenreName" TextWrapping="Wrap" Text="Детективный роман. Триллер" Margin="5"/>
+                            <TextBlock x:Name="bookPublisherName" TextWrapping="Wrap" Text="АСТ" Margin="5"/>
+                            <TextBlock x:Name="bookSeriesName" TextWrapping="Wrap" Text="Сказания о магии Поднебесной" Margin="5"/>
+                            <TextBlock x:Name="bookPublishYear" TextWrapping="Wrap" Text="2023" Margin="5"/>
+                            <TextBlock x:Name="bookPages" TextWrapping="Wrap" Text="222" Margin="5"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Margin="0,5,0,0">
+                    <Button x:Name="buttonAddBook" Content="Добавить книгу" Click="buttonAddBook_Click"/>
+                </Border>
+            </StackPanel>
+            <Border DockPanel.Dock="Right" Margin="5" BorderBrush="Gray" BorderThickness="1" CornerRadius="2">
+                <ScrollViewer>
+                    <TextBlock x:Name="bookDescription" TextWrapping="Wrap" FontSize="16" Margin="5"/>
+                </ScrollViewer>
+            </Border>
+        </DockPanel>
+    </Grid>
+</Window>
