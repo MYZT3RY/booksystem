@@ -1,0 +1,73 @@
+﻿<Window x:Class="bookSystem.bookEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bookSystem"
+        mc:Ignorable="d"
+        Title="Редактирование книги" Height="400" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Border Margin="5,5,5,5" BorderThickness="1,1,1,1" BorderBrush="Gray" CornerRadius="2,2,2,2">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Bottom">
+                    <StackPanel DockPanel.Dock="Left" Margin="5,5,5,5">
+                        <Button x:Name="buttonSave" Content="Сохранить" Width="80" Click="buttonSave_Click"/>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Right" Margin="5,5,5,5" HorizontalAlignment="Right">
+                        <Button x:Name="buttonCancel" Content="Отменить" Width="80"/>
+                    </StackPanel>
+                </DockPanel>
+                <Border DockPanel.Dock="Bottom" Margin="5,5,5,5" BorderThickness="1,1,1,1" BorderBrush="Gray" CornerRadius="2,2,2,2" Height="100">
+                    <DockPanel>
+                        <ScrollViewer>
+                            <TextBox x:Name="bookDescription" TextWrapping="Wrap" AcceptsReturn="True"/>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+                <TextBlock DockPanel.Dock="Bottom" Padding="10,0,0,0">
+            <Run Text="Описание"/>
+            <Run Text="*" Foreground="Red"/>
+                </TextBlock>
+                <StackPanel Margin="5,5,5,5" DockPanel.Dock="Left">
+                    <TextBlock Margin="0,5,0,5">
+                        <Run Text="Название"/>
+                        <Run Text="*" Foreground="Red"/>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5">
+                        <Run Text="Автор"/>
+                        <Run Text="*" Foreground="Red"/>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5">
+                        <Run Text="Жанр"/>
+                        <Run Text="*" Foreground="Red"/>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5">
+                        <Run Text="Издатель"/>
+                        <Run Text="*" Foreground="Red"/>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5">
+                        <Run Text="Серия"/>
+                        <Run Text="*" Foreground="Red"/>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5">
+                        <Run Text="Год издания"/>
+                        <Run Text="*" Foreground="Red"/>
+                    </TextBlock>
+                    <TextBlock Margin="0,5,0,5">
+                        <Run Text="Количество страниц"/>
+                        <Run Text="*" Foreground="Red"/>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Margin="5,5,5,5" DockPanel.Dock="Right">
+                    <TextBox x:Name="bookName" Margin="0,5,0,5"/>
+                    <ComboBox x:Name="bookAuthor" Margin="0,0,0,0" DisplayMemberPath="Author_Name"/>
+                    <ComboBox x:Name="bookGenre" Margin="0,5,0,0" DisplayMemberPath="Genre_Name"/>
+                    <ComboBox x:Name="bookPublisher" Margin="0,5,0,0" DisplayMemberPath="Publisher_Name"/>
+                    <ComboBox x:Name="bookSeries" Margin="0,5,0,0" DisplayMemberPath="Series_Name"/>
+                    <TextBox x:Name="bookPublishYear" Margin="0,5,0,5"/>
+                    <TextBox x:Name="bookPages" Margin="0,0,0,5"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

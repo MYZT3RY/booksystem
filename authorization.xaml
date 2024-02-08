@@ -9,9 +9,11 @@
     <Grid>
         <Border Margin="5,5,5,5" BorderThickness="1,1,1,1" BorderBrush="Gray" CornerRadius="2,2,2,2">
             <StackPanel VerticalAlignment="Center" Width="170">
-                <Label Content="ПАРОЛЬ" FontSize="18" HorizontalContentAlignment="Center"/>
-                <PasswordBox FontSize="18" Height="30" x:Name="password"/>
-                <Button Content="ВОЙТИ" FontSize="18" Height="30" Margin="0,10,0,0" x:Name="logIn" Click="logIn_Click"/>
+                <TextBlock Text="Логин" FontSize="16"/>
+                <TextBox x:Name="authorizationLogin" FontSize="18" Height="25"/>
+                <TextBlock Text="Пароль" FontSize="16"/>
+                <PasswordBox FontSize="18" Height="25" x:Name="AuthorizationPassword"/>
+                <Button Content="Войти" FontSize="16" Margin="0,5,0,0" x:Name="logIn" Click="logIn_Click"/>
             </StackPanel>
         </Border>
     </Grid>
