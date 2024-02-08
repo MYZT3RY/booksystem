@@ -1,26 +1,25 @@
 ﻿using System.Windows;
 
 namespace bookSystem {
-    /// <summary>
-    /// Логика взаимодействия для authorization.xaml
-    /// </summary>
     public partial class authorization : Window {
-        private string __password = "1234";
-
         public authorization() {
             InitializeComponent();
         }
 
         private void logIn_Click(object sender, RoutedEventArgs e) {
-            if (password.Password != string.Empty) {
-                if (password.Password == __password) {
+            if (AuthorizationPassword.Password != string.Empty && authorizationLogin.Text != string.Empty) {
+                data.Users user = data.users.Find(u => u.User_Login == authorizationLogin.Text && u.User_Password == AuthorizationPassword.Password);
+
+                if (user.User_Login != null) {
                     this.Close();
 
+                    data.currentUser = user;
+
                     MainWindow mainWindow = (MainWindow)this.Owner;
-                    mainWindow.enableDataGridContextMenu();
+                    mainWindow.enableUserActivity();
                 }
                 else {
-                    MessageBox.Show("Неправильный пароль!");
+                    MessageBox.Show("Неправильный логин или пароль!");
                 }
             }
         }
