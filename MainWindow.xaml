@@ -10,24 +10,50 @@
         <DockPanel>
             <Menu Height="20" DockPanel.Dock="Top">
                 <MenuItem Header="Файл">
-                    <MenuItem Header="Авторизация"/>
+                    <MenuItem Header="Авторизация" x:Name="authorizationMenuItem" Click="authorizationMenuItem_Click"/>
+                    <MenuItem Header="Регистрация" x:Name="registerMenuItem" Click="registerMenuItem_Click"/>
                     <Separator/>
-                    <MenuItem Header="Поиск" IsCheckable="True" x:Name="enableSearchMenuItem" Click="enableSearchMenuItem_Click"/>
-                    <Separator/>
-                    <MenuItem Header="Выход"/>
+                    <MenuItem Header="Выход" x:Name="exitMenuItem" Click="exitMenuItem_Click"/>
+                </MenuItem>
+                <MenuItem Header="Данные" x:Name="dataMenuItem" Visibility="Collapsed">
+                    <MenuItem Header="Авторы" x:Name="authorsViewMenuItem" Click="authorsViewMenuItem_Click"/>
+                    <MenuItem Header="Жанры" x:Name="genresView" Click="genresView_Click"/>
+                    <MenuItem Header="Издатели" x:Name="publishersView" Click="publishersView_Click"/>
+                    <MenuItem Header="Серии" x:Name="seriesView" Click="seriesView_Click"/>
+                    <MenuItem Header="Пользователи" x:Name="usersView" Click="usersView_Click"/>
+                </MenuItem>
+                <MenuItem Header="Пользователь" Visibility="Collapsed" x:Name="userMenuItem">
+                    <MenuItem Header="Профиль" x:Name="profileMenuItem" Click="profileMenuItem_Click"/>
+                    <MenuItem Header="Корзина" x:Name="cartMenuItem"/>
                 </MenuItem>
             </Menu>
-            <StackPanel DockPanel.Dock="Left" Margin="5,5,5,5" x:Name="searchPanel" Visibility="Collapsed">
-                <Label Content="Поиск"/>
+            <StackPanel DockPanel.Dock="Left" Margin="5,5,5,5" x:Name="searchPanel" Visibility="Collapsed" Width="200">
+                <StackPanel>
+                    <TextBlock Text="Поиск" TextAlignment="Center"/>
+                    <TextBlock Text="Название"/>
+                    <TextBox x:Name="searchBookName"/>
+                    <TextBlock Text="Автор" Margin="0,5,0,0"/>
+                    <ComboBox x:Name="searchBookAuthor" Margin="0,5,0,0" DisplayMemberPath="Author_Name"/>
+                    <TextBlock Text="Жанр" Margin="0,5,0,0"/>
+                    <ComboBox x:Name="searchBookGenre" Margin="0,5,0,0" DisplayMemberPath="Genre_Name"/>
+                </StackPanel>
             </StackPanel>
-            <DataGrid x:Name="dataGrid" IsReadOnly="True" DockPanel.Dock="Right">
+            <DataGrid x:Name="dataGrid" IsReadOnly="True" DockPanel.Dock="Right" AutoGenerateColumns="False" FontSize="15" SelectionMode="Single" RowBackground="LightGray" AlternatingRowBackground="White" MouseDoubleClick="dataGrid_MouseDoubleClick" ContextMenuOpening="dataGrid_ContextMenuOpening">
                 <DataGrid.ContextMenu>
                     <ContextMenu x:Name="dataGridContextMenu" Visibility="Collapsed">
-                        <MenuItem Header="Добавить"/>
-                        <MenuItem Header="Редактировать"/>
-                        <MenuItem Header="Удалить"/>
+                        <MenuItem Header="Добавить" x:Name="dataGridBookAdd" Click="dataGridBookAdd_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Редактировать" x:Name="dataGridBookEdit" Click="dataGridBookEdit_Click"/>
+                        <MenuItem Header="Удалить" x:Name="dataGridBookDelete" Click="dataGridBookDelete_Click" />
                     </ContextMenu>
                 </DataGrid.ContextMenu>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Path=Book_Name}" Width="*"/>
+                    <DataGridTextColumn Header="Автор" Binding="{Binding Path=Author.Author_Name}" Width="*"/>
+                    <DataGridTextColumn Header="Жанр" Binding="{Binding Path=Genre.Genre_Name}" Width="*"/>
+                    <DataGridTextColumn Header="Издатель" Binding="{Binding Path=Publisher.Publisher_Name}" Width="*"/>
+                    <DataGridTextColumn Header="Серия" Binding="{Binding Path=Series.Series_Name}" Width="*"/>
+                </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
     </Grid>
