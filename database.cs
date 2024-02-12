@@ -382,5 +382,37 @@ namespace bookSystem {
 
             executeQuery(sql_query);
         }
+
+        public void cartAdd(int userId, int bookId) {
+            string sql_query = $"insert into public.carts (user_id, book_id) values ('{userId}', '{bookId}')";
+
+            executeQuery(sql_query);
+        }
+
+        public void cartRemove(data.Carts cart) {
+            string sql_query = $"delete from public.carts where primary_id = '{cart.Primary_Id}'";
+
+            executeQuery(sql_query);
+        }
+
+        public void loadCart() {
+            data.carts.Clear();
+
+            string sql_query = "select * from public.carts";
+
+            executeReader(sql_query);
+
+            if (Reader.HasRows) {
+                while (Reader.Read()) {
+                    data.carts.Add(new data.Carts {
+                        Primary_Id = (int)Reader["primary_id"]
+                        , User_Id = (int)Reader["user_id"]
+                        , Book_Id = (int)Reader["book_id"]
+                    });
+                }
+            }
+
+            Reader.Close();
+        }
     }
 }
