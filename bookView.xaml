@@ -20,6 +20,7 @@
                             <Label Content="Серия"/>
                             <Label Content="Год издания"/>
                             <Label Content="Количество страниц"/>
+                            <Label Content="Стоимость"/>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Right">
                             <TextBlock x:Name="bookId" TextWrapping="Wrap" Text="2" Margin="5"/>
@@ -28,6 +29,7 @@
                             <TextBlock x:Name="bookSeriesName" TextWrapping="Wrap" Text="Сказания о магии Поднебесной" Margin="5"/>
                             <TextBlock x:Name="bookPublishYear" TextWrapping="Wrap" Text="2023" Margin="5"/>
                             <TextBlock x:Name="bookPages" TextWrapping="Wrap" Text="222" Margin="5"/>
+                            <TextBlock x:Name="bookPrice" TextWrapping="Wrap" Text="1249" Margin="5"/>
                         </StackPanel>
                     </DockPanel>
                 </Border>

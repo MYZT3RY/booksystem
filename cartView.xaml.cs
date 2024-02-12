@@ -6,7 +6,7 @@ using System.Windows.Documents;
 
 namespace bookSystem {
     public partial class cartView : Window {
-        List<data.Book> cartBooks = new List<data.Book>();
+        List<data.Carts> cart = new List<data.Carts>();
 
         string cheque;
 
@@ -14,26 +14,24 @@ namespace bookSystem {
             InitializeComponent();
 
             refreshLists();
+            refreshTextBlocks();
         }
 
         private void getUserBooks() {
-            List<data.Carts> __cartBooks = data.carts.FindAll(c => c.User_Id == data.currentUser.User_Id);
+            cart.Clear();
 
-            cartBooks.Clear();
-
-            foreach (data.Carts cart in __cartBooks) {
-                cartBooks.Add(data.books.Find(b => b.Book_Id == cart.Book_Id));
-            }
+            cart = data.carts.FindAll(c => c.User_Id == data.currentUser.User_Id);
         }
 
-        public void dataGridSetItemSource(List<data.Book> book) {
+        public void dataGridSetItemSource(List<data.Carts> cart) {
             dataGrid.ClearValue(ItemsControl.ItemsSourceProperty);
-            dataGrid.ItemsSource = book;
+            dataGrid.ItemsSource = cart;
         }
 
         private void dataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             if (dataGrid.SelectedItem != null) {
-                bookView bookView = new bookView((data.Book)dataGrid.SelectedItem);
+                data.Carts carts = (data.Carts)dataGrid.SelectedItem;
+                bookView bookView = new bookView(carts.Book);
 
                 bookView.Owner = this;
                 bookView.ShowDialog();
@@ -42,10 +40,11 @@ namespace bookSystem {
 
         private void Window_Activated(object sender, System.EventArgs e) {
             refreshLists();
+            refreshTextBlocks();
         }
 
         private void placeOrderButton_Click(object sender, RoutedEventArgs e) {
-            if (cartBooks.Count > 0) {
+            if (cart.Count > 0) {
                 cheque = generateCheque();
 
                 if (printChequeCheckBox.IsChecked == true) {
@@ -55,9 +54,7 @@ namespace bookSystem {
                 database db = new database();
 
                 if (db.openConnection(db.connectionString)) {
-                    List<data.Carts> __cartBooks = data.carts.FindAll(c => c.User_Id == data.currentUser.User_Id);
-
-                    foreach (data.Carts c in __cartBooks) {
+                    foreach (data.Carts c in cart) {
                         db.userBookAdd(data.currentUser.User_Id, c.Book_Id);
                     }
 
@@ -71,7 +68,7 @@ namespace bookSystem {
         }
 
         private void cleanCartButton_Click(object sender, RoutedEventArgs e) {
-            if (cartBooks.Count > 0) {
+            if (cart.Count > 0) {
                 clearCart();
             }
         }
@@ -79,18 +76,32 @@ namespace bookSystem {
         private void refreshLists() {
             getUserBooks();
 
-            dataGridSetItemSource(cartBooks);
+            dataGridSetItemSource(cart);
         }
 
         private string generateCheque() {
+            int __count = 1;
+
+            int __totalBooks = 0;
+            int __totalPrice = 0;
+
             string __cheque = $"Чек: {Guid.NewGuid()}\n" +
                               $"Дата: {DateTime.Now.ToString("G")}\n" +
+                              $"Покупатель: {data.currentUser.User_Login}\n" +
                                "*************************************\n" +
-                              $"Товар\n";
+                              $"Товар Количество Цена\n";
 
-            foreach (var item in cartBooks) {
-                __cheque += $"{item.Book_Name}\n";
+            foreach (var item in cart) {
+                __cheque += $"{__count}. {item.Book.Book_Name} - {item.Cart_Values} шт. - {item.Book.Book_Price} руб.\n";
+
+                __totalBooks += item.Cart_Values;
+                __totalPrice += item.Book.Book_Price * item.Cart_Values;
+
+                __count++;
             }
+
+            __cheque += $"Количество товаров: {__totalBooks} шт.\n";
+            __cheque += $"Общая сумма: {__totalPrice} руб.\n";
 
             __cheque += "*************************************";
 
@@ -123,18 +134,64 @@ namespace bookSystem {
             database db = new database();
 
             if (db.openConnection(db.connectionString)) {
-                List<data.Carts> __cartBooks = data.carts.FindAll(c => c.User_Id == data.currentUser.User_Id);
-
-                foreach (data.Carts c in __cartBooks) {
+                foreach (data.Carts c in cart) {
                     db.cartRemove(c);
                 }
 
                 db.loadCart();
 
                 refreshLists();
+                refreshTextBlocks();
 
                 db.closeConnection();
             }
+        }
+
+        private void plusValueButton_Click(object sender, RoutedEventArgs e) {
+            if (dataGrid.SelectedItem != null) {
+                database db = new database();
+
+                if (db.openConnection(db.connectionString)) {
+                    db.cartAddValue((data.Carts)dataGrid.SelectedItem);
+
+                    db.loadCart();
+
+                    refreshLists();
+                    refreshTextBlocks();
+
+                    db.closeConnection();
+                }
+            }
+        }
+
+        private void minusValueButton_Click(object sender, RoutedEventArgs e) {
+            if (dataGrid.SelectedItem != null) {
+                database db = new database();
+
+                if (db.openConnection(db.connectionString)) {
+                    db.cartRemoveValue((data.Carts)dataGrid.SelectedItem);
+
+                    db.loadCart();
+
+                    refreshLists();
+                    refreshTextBlocks();
+
+                    db.closeConnection();
+                }
+            }
+        }
+
+        private void refreshTextBlocks() {
+            int totalBooks = 0;
+            int totalPrice = 0;
+
+            foreach (data.Carts c in cart) {
+                totalBooks += c.Cart_Values;
+                totalPrice += c.Book.Book_Price * c.Cart_Values;
+            }
+
+            totalBooksTextBlock.Text = $"Кол-во товаров: {totalBooks}";
+            totalPriceTextBlock.Text = $"Сумма чека: {totalPrice}";
         }
     }
 }

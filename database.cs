@@ -156,6 +156,7 @@ namespace bookSystem {
                         , Series = data.series.Find(s => s.Series_Id == (int)Reader["series_id"])
                         , Book_Publish_Year = (int)Reader["book_publish_year"]
                         , Book_Pages = (int)Reader["book_pages"]
+                        , Book_Price = (int)Reader["book_price"]
                     });
                 }
             }
@@ -233,8 +234,8 @@ namespace bookSystem {
             book.Book_Description = checkEscapeChars(book.Book_Description);
 
             string sql_query = "insert into public.books" +
-                                "(book_name, author_id, genre_id, book_description, publisher_id, series_id, book_publish_year, book_pages) values" +
-                                $"('{book.Book_Name}', '{book.Author.Author_Id}', '{book.Genre.Genre_Id}', '{book.Book_Description}', '{book.Publisher.Publisher_Id}', '{book.Series.Series_Id}', '{book.Book_Publish_Year}', '{book.Book_Pages}')";
+                                "(book_name, author_id, genre_id, book_description, publisher_id, series_id, book_publish_year, book_pages, book_price) values" +
+                                $"('{book.Book_Name}', '{book.Author.Author_Id}', '{book.Genre.Genre_Id}', '{book.Book_Description}', '{book.Publisher.Publisher_Id}', '{book.Series.Series_Id}', '{book.Book_Publish_Year}', '{book.Book_Pages}', '{book.Book_Price}')";
 
             executeQuery(sql_query);
         }
@@ -244,7 +245,7 @@ namespace bookSystem {
             book.Book_Description = checkEscapeChars(book.Book_Description);
 
             string sql_query = "update public.books " +
-                                $"set genre_id = '{book.Genre.Genre_Id}', author_id = '{book.Author.Author_Id}', book_name = '{book.Book_Name}', book_description = '{book.Book_Description}', publisher_id = '{book.Publisher.Publisher_Id}', series_id = '{book.Series.Series_Id}', book_publish_year = '{book.Book_Publish_Year}', book_pages = '{book.Book_Pages}'" +
+                                $"set genre_id = '{book.Genre.Genre_Id}', author_id = '{book.Author.Author_Id}', book_name = '{book.Book_Name}', book_description = '{book.Book_Description}', publisher_id = '{book.Publisher.Publisher_Id}', series_id = '{book.Series.Series_Id}', book_publish_year = '{book.Book_Publish_Year}', book_pages = '{book.Book_Pages}', book_price = '{book.Book_Price}' " +
                                 $"where book_id = '{book.Book_Id}'";
 
             executeQuery(sql_query);
@@ -395,10 +396,22 @@ namespace bookSystem {
             executeQuery(sql_query);
         }
 
+        public void cartAddValue(data.Carts cart) {
+            string sql_query = $"update public.carts set cart_values = cart_values + '1' where primary_id = '{cart.Primary_Id}'";
+
+            executeQuery(sql_query);
+        }
+
+        public void cartRemoveValue(data.Carts cart) {
+            string sql_query = $"update public.carts set cart_values = cart_values - '1' where primary_id = '{cart.Primary_Id}'";
+
+            executeQuery(sql_query);
+        }
+
         public void loadCart() {
             data.carts.Clear();
 
-            string sql_query = "select * from public.carts";
+            string sql_query = "select * from public.carts order by primary_id";
 
             executeReader(sql_query);
 
@@ -408,6 +421,8 @@ namespace bookSystem {
                         Primary_Id = (int)Reader["primary_id"]
                         , User_Id = (int)Reader["user_id"]
                         , Book_Id = (int)Reader["book_id"]
+                        , Cart_Values = (int)Reader["cart_values"]
+                        , Book = data.books.Find(b => b.Book_Id == (int)Reader["book_id"])
                     });
                 }
             }

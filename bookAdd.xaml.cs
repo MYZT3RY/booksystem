@@ -21,29 +21,35 @@ namespace bookSystem {
                                 if (bookPublishYear.Text.Length > 0) {
                                     if (bookPages.Text.Length > 0) {
                                         if (bookDescription.Text.Length > 0) {
-                                            database db = new database();
+                                            if (Convert.ToInt32(bookPrice.Text) > 0) {
+                                                database db = new database();
 
-                                            if (db.openConnection(db.connectionString)) {
-                                                db.bookAdd(new data.Book {
-                                                    Book_Name = bookName.Text
-                                                    , Book_Description = bookDescription.Text
-                                                    , Author = (data.Author)bookAuthor.SelectedItem
-                                                    , Genre = (data.Genre)bookGenre.SelectedItem
-                                                    , Publisher = (data.Publisher)bookPublisher.SelectedItem
-                                                    , Series = (data.Series)bookSeries.SelectedItem
-                                                    , Book_Publish_Year = Convert.ToInt32(bookPublishYear.Text)
-                                                    , Book_Pages = Convert.ToInt32(bookPages.Text)
-                                                });
+                                                if (db.openConnection(db.connectionString)) {
+                                                    db.bookAdd(new data.Book {
+                                                        Book_Name = bookName.Text
+                                                        , Book_Description = bookDescription.Text
+                                                        , Author = (data.Author)bookAuthor.SelectedItem
+                                                        , Genre = (data.Genre)bookGenre.SelectedItem
+                                                        , Publisher = (data.Publisher)bookPublisher.SelectedItem
+                                                        , Series = (data.Series)bookSeries.SelectedItem
+                                                        , Book_Publish_Year = Convert.ToInt32(bookPublishYear.Text)
+                                                        , Book_Pages = Convert.ToInt32(bookPages.Text)
+                                                        , Book_Price = Convert.ToInt32(bookPrice.Text)
+                                                    });
 
-                                                db.loadBooks();
+                                                    db.loadBooks();
 
-                                                db.closeConnection();
+                                                    db.closeConnection();
 
-                                                MainWindow mainWindow = (MainWindow)this.Owner;
-                                                mainWindow.dataGridSetItemSource(data.books);
+                                                    MainWindow mainWindow = (MainWindow)this.Owner;
+                                                    mainWindow.dataGridSetItemSource(data.books);
+                                                }
+                                                else {
+                                                    MessageBox.Show("Подключение к базе данных неактивно!");
+                                                }
                                             }
                                             else {
-                                                MessageBox.Show("Подключение к базе данных неактивно!");
+
                                             }
                                         }
                                         else {
