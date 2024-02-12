@@ -19,6 +19,7 @@ namespace bookSystem {
                 db.loadRoles();
                 db.loadUsers();
                 db.loadUserBooks();
+                db.loadCart();
 
                 dataGridSetItemSource(data.books);
 
@@ -152,6 +153,13 @@ namespace bookSystem {
 
             userProfile.Owner = this;
             userProfile.ShowDialog();
+        }
+
+        private void cartMenuItem_Click(object sender, RoutedEventArgs e) {
+            cartView cartView = new cartView();
+
+            cartView.Owner = this;
+            cartView.ShowDialog();
         }
     }
 }

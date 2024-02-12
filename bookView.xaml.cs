@@ -3,7 +3,7 @@
 namespace bookSystem {
     public partial class bookView : Window {
         data.Book book;
-        data.UsersBooks checkBook;
+        data.Carts checkCart;
 
         public bookView(data.Book book) {
             InitializeComponent();
@@ -25,13 +25,13 @@ namespace bookSystem {
             if (data.currentUser.User_Login != null) {
                 buttonAddBook.IsEnabled = true;
 
-                checkBook = data.usersBooks.Find(ub => ub.UB_User_Id == data.currentUser.User_Id && ub.UB_Book_Id == book.Book_Id);
+                checkCart = data.carts.Find(c => c.User_Id == data.currentUser.User_Id && c.Book_Id == book.Book_Id);
 
-                if (checkBook.UB_Book_Id != 0) {
-                    buttonAddBook.Content = "Удалить книгу";
+                if (checkCart.Primary_Id != 0) {
+                    buttonAddBook.Content = "Убрать из корзины";
                 }
                 else {
-                    buttonAddBook.Content = "Добавить книгу";
+                    buttonAddBook.Content = "Добавить в корзину";
                 }
             }
             else {
@@ -40,22 +40,20 @@ namespace bookSystem {
         }
 
         private void buttonAddBook_Click(object sender, RoutedEventArgs e) {
-            if (checkBook.UB_Book_Id != 0) {
+            if (checkCart.Primary_Id != 0) {
                 database db = new database();
 
                 if (db.openConnection(db.connectionString)) {
-                    db.userBookDelete(checkBook);
-
-                    db.loadUserBooks();
+                    db.cartRemove(checkCart);
+                    db.loadCart();
                 }
             }
             else {
                 database db = new database();
 
                 if (db.openConnection(db.connectionString)) {
-                    db.userBookAdd(data.currentUser.User_Id, book.Book_Id);
-
-                    db.loadUserBooks();
+                    db.cartAdd(data.currentUser.User_Id, book.Book_Id);
+                    db.loadCart();
                 }
             }
 

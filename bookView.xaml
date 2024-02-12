@@ -32,7 +32,7 @@
                     </DockPanel>
                 </Border>
                 <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Margin="0,5,0,0">
-                    <Button x:Name="buttonAddBook" Content="Добавить книгу" Click="buttonAddBook_Click"/>
+                    <Button x:Name="buttonAddBook" Content="Добавить в корзину" Click="buttonAddBook_Click"/>
                 </Border>
             </StackPanel>
             <Border DockPanel.Dock="Right" Margin="5" BorderBrush="Gray" BorderThickness="1" CornerRadius="2">

@@ -24,7 +24,7 @@
                 </MenuItem>
                 <MenuItem Header="Пользователь" Visibility="Collapsed" x:Name="userMenuItem">
                     <MenuItem Header="Профиль" x:Name="profileMenuItem" Click="profileMenuItem_Click"/>
-                    <MenuItem Header="Корзина" x:Name="cartMenuItem"/>
+                    <MenuItem Header="Корзина" x:Name="cartMenuItem" Click="cartMenuItem_Click"/>
                 </MenuItem>
             </Menu>
             <StackPanel DockPanel.Dock="Left" Margin="5,5,5,5" x:Name="searchPanel" Visibility="Collapsed" Width="200">
