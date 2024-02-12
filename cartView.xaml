@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bookSystem"
         mc:Ignorable="d"
-        Title="Корзина" Height="450" Width="800" Activated="Window_Activated">
+        Title="Корзина" Height="450" Width="1000" Activated="Window_Activated">
     <Window.Resources>
         <Style TargetType="Border">
             <Setter Property="BorderThickness" Value="1"/>
@@ -23,6 +23,12 @@
             <DockPanel>
                 <Border DockPanel.Dock="Left">
                     <StackPanel Width="200" VerticalAlignment="Center">
+                        <Border Width="150">
+                            <StackPanel Margin="0,5,0,5">
+                                <TextBlock x:Name="totalBooksTextBlock" Text="Кол-во товаров: 999999" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="totalPriceTextBlock" Text="Сумма чека: 1000000" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
                         <Button>
                             <CheckBox Content="Печать чека" x:Name="printChequeCheckBox" IsChecked="True"/>
                         </Button>
@@ -31,9 +37,46 @@
                     </StackPanel>
                 </Border>
                 <Border DockPanel.Dock="Right">
-                    <DataGrid x:Name="dataGrid" IsReadOnly="True" AutoGenerateColumns="False" FontSize="15" SelectionMode="Single" RowBackground="LightGray" AlternatingRowBackground="White" MouseDoubleClick="dataGrid_MouseDoubleClick">
+                    <DataGrid x:Name="dataGrid" IsReadOnly="True" AutoGenerateColumns="False" FontSize="15" SelectionMode="Single" RowBackground="LightGray" AlternatingRowBackground="White" MouseDoubleClick="dataGrid_MouseDoubleClick" RowHeight="40">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Название" Binding="{Binding Path=Book_Name}" Width="*"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Path=Book.Book_Name}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Path=Book.Book_Price}" Width="60">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Кол-во" Width="60" Binding="{Binding Path=Cart_Values}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Width="35">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="plusValueButton" Content="+" Width="20" Tag="{Binding SelectedItem, ElementName=dataGrid}" Click="plusValueButton_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="35">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="minusValueButton" Content="-" Width="20" Tag="{Binding SelectedItem, ElementName=dataGrid}" Click="minusValueButton_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
