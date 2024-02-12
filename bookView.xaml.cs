@@ -22,6 +22,8 @@ namespace bookSystem {
             bookPublishYear.Text = book.Book_Publish_Year.ToString();
             bookPages.Text = book.Book_Pages.ToString();
 
+            bookPrice.Text = book.Book_Price.ToString();
+
             if (data.currentUser.User_Login != null) {
                 buttonAddBook.IsEnabled = true;
 
