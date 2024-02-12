@@ -13,6 +13,7 @@ namespace bookSystem {
             public string Book_Description { get; set; }
             public int Book_Publish_Year { get; set; }
             public int Book_Pages { get; set; }
+            public int Book_Price { get; set; }
         }
 
         public struct Genre {
@@ -60,6 +61,8 @@ namespace bookSystem {
             public int Primary_Id { get; set; }
             public int User_Id { get; set; }
             public int Book_Id { get; set; }
+            public int Cart_Values { get; set; }
+            public Book Book { get; set; }
         }
 
         public static List<Book> books = new List<Book>();
