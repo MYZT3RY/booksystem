@@ -56,6 +56,12 @@ namespace bookSystem {
             public DateTime UB_Add_Date { get; set; }
         }
 
+        public struct Carts {
+            public int Primary_Id { get; set; }
+            public int User_Id { get; set; }
+            public int Book_Id { get; set; }
+        }
+
         public static List<Book> books = new List<Book>();
         public static List<Genre> genres = new List<Genre>();
         public static List<Author> authors = new List<Author>();
@@ -64,6 +70,7 @@ namespace bookSystem {
         public static List<Users> users = new List<Users>();
         public static List<Roles> roles = new List<Roles>();
         public static List<UsersBooks> usersBooks = new List<UsersBooks>();
+        public static List<Carts> carts = new List<Carts>();
         public static Users currentUser;
     }
 }
